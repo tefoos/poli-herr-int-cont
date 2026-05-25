@@ -1,0 +1,18 @@
+# Binaries
+main
+*.exe
+
+# Go
+*.test
+*.out
+
+# Environment
+.env
+
+# Docker
+docker-compose.override.yml
+
+# OS
+.DS_Store
+.idea/
+.vscode/
