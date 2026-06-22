@@ -27,6 +27,6 @@ func main() {
 	r.HandleFunc("/list/{name}/remove", handlers.Remove).Methods("POST")
 	r.HandleFunc("/{type}/{name}", handlers.GetState).Methods("GET")
 
-	log.Println("Server running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Println("Server running on port 8081")
+	log.Fatal(http.ListenAndServe(":8081", r))
 }
