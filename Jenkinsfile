@@ -17,7 +17,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'go test ./...'
+                sh 'docker run --rm -v $(pwd):/app -w /app golang:1.24-alpine go test ./...'
             }
         }
 
