@@ -7,39 +7,42 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-var client *redis.Client
-var ctx = context.Background()
+type RedisStore struct {
+	client *redis.Client
+	ctx    context.Context
+}
 
-func Init(host, port string) {
-	client = redis.NewClient(&redis.Options{
+func NewRedisStore(host, port string) *RedisStore {
+	client := redis.NewClient(&redis.Options{
 		Addr: fmt.Sprintf("%s:%s", host, port),
 	})
+	return &RedisStore{client: client, ctx: context.Background()}
 }
 
-func Push(key, value string) error {
-	return client.LPush(ctx, key, value).Err()
+func (r *RedisStore) Push(key, value string) error {
+	return r.client.LPush(r.ctx, key, value).Err()
 }
 
-func Pop(key string) (string, error) {
-	return client.LPop(ctx, key).Result()
+func (r *RedisStore) Pop(key string) (string, error) {
+	return r.client.LPop(r.ctx, key).Result()
 }
 
-func Enqueue(key, value string) error {
-	return client.RPush(ctx, key, value).Err()
+func (r *RedisStore) Enqueue(key, value string) error {
+	return r.client.RPush(r.ctx, key, value).Err()
 }
 
-func Dequeue(key string) (string, error) {
-	return client.LPop(ctx, key).Result()
+func (r *RedisStore) Dequeue(key string) (string, error) {
+	return r.client.LPop(r.ctx, key).Result()
 }
 
-func Append(key, value string) error {
-	return client.RPush(ctx, key, value).Err()
+func (r *RedisStore) Append(key, value string) error {
+	return r.client.RPush(r.ctx, key, value).Err()
 }
 
-func Remove(key string) (string, error) {
-	return client.LPop(ctx, key).Result()
+func (r *RedisStore) Remove(key string) (string, error) {
+	return r.client.LPop(r.ctx, key).Result()
 }
 
-func GetState(key string) ([]string, error) {
-	return client.LRange(ctx, key, 0, -1).Result()
+func (r *RedisStore) GetState(key string) ([]string, error) {
+	return r.client.LRange(r.ctx, key, 0, -1).Result()
 }
