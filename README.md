@@ -42,3 +42,4 @@ chmod +x test.sh
 - POST /list/{name}/append
 - POST /list/{name}/remove
 - GET /list/{name}
+test webhook
