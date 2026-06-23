@@ -17,7 +17,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'docker run --rm -v $(pwd):/app -w /app golang:1.24-alpine go test ./...'
+                sh 'docker run --rm -v /var/lib/docker/volumes/jenkins_home/_data/workspace/poli-herr-int-cont-pipeline:/app -w /app golang:1.24-alpine go test ./...'
             }
         }
 
